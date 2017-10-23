@@ -4,9 +4,13 @@ install pench via composer
 ```
 composer require hosseinmousavi/pench
 ```
+then include composer autoload file
+```php
+require 'vendor/autoload.php';
+```
 or just include it
 ```
-require 'pench.php';
+require 'src/pench.php';
 ```
 pench API is damn simple, see example below:
 
