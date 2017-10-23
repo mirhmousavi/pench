@@ -1,5 +1,5 @@
 # pench
-# Another PHP benchmark system
+## Another PHP benchmark system
 install pench via composer
 ```
 composer require hosseinmousavi/pench
