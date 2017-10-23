@@ -1,5 +1,13 @@
 # pench
-<h2>Another PHP benchmark system</h2>
+# Another PHP benchmark system
+install pench via composer
+```
+composer require hosseinmousavi/pench
+```
+or just include it
+```
+require 'pench.php';
+```
 pench API is damn simple, see example below:
 
 ```php
@@ -41,4 +49,3 @@ array (size=1)
       'memory_usage' => string '152 Byte' (length=8)
       'peak_memory_usage' => string '176 Byte' (length=8)
 ```
-      
