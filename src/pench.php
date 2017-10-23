@@ -29,26 +29,6 @@ class Pench
         return self::stats();
     }
 
-    public static function calcuate_memory_with_unit($input)
-    {
-        if ($input < 1024) {
-            return ($input) . ' Byte';
-        } elseif ($input > 1024 and $input < 1048000) {
-            return ($input / 1024) . ' KB';
-        } else {
-            return ($input / 1024 / 1024) . ' MB';
-        }
-
-    }
-    public static function calcuate_time_with_unit($input)
-    {
-        if ($input < 300) {
-            return $input . ' Sec';
-        } else {
-            return ($input / 60) . ' Min';
-        }
-
-    }
     public static function stats()
     {
         if (self::$end_time == 0) {
@@ -68,6 +48,7 @@ class Pench
         };
         $result['peak_memory_usage'] = self::calcuate_memory_with_unit($result['peak_memory_usage']);
         self::$stats                 = $result;
+        self::$end_time              = 0; //reset benchmark
         return $result;
     }
 
@@ -82,5 +63,26 @@ class Pench
             $l = $report;
         }
         var_dump($l);
+    }
+
+    public static function calcuate_memory_with_unit($input)
+    {
+        if ($input < 1024) {
+            return ($input) . ' B';
+        } elseif ($input > 1024 and $input < 1048000) {
+            return ($input / 1024) . ' KB';
+        } else {
+            return ($input / 1024 / 1024) . ' MB';
+        }
+
+    }
+    public static function calcuate_time_with_unit($input)
+    {
+        if ($input < 300) {
+            return $input . ' Sec';
+        } else {
+            return ($input / 60) . ' Min';
+        }
+
     }
 }

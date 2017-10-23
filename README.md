@@ -53,3 +53,16 @@ array (size=1)
       'memory_usage' => string '152 Byte' (length=8)
       'peak_memory_usage' => string '176 Byte' (length=8)
 ```
+for benchmarking multiple parts you should call Pench::start() every time
+```php
+Pench::start();
+foreach($haystack as $value) {
+  echo $value;
+}
+$report['foreach']=Pench::end();
+Pench::start();
+array_walk($haystack,function($value){
+  echo $value;
+});
+$report['array_walk']=Pench::end();//or Pench::dump('array_walk') to print report inline
+```
