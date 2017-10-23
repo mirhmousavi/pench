@@ -40,16 +40,25 @@ class Pench
         }
 
     }
+    public static function calcuate_time_with_unit($input)
+    {
+        if ($input < 300) {
+            return $input . ' Sec';
+        } else {
+            return ($input / 60) . ' Min';
+        }
+
+    }
     public static function stats()
     {
-        if (self::$start_time == 0 or self::$end_time == 0) {
+        if (self::$end_time == 0) {
             self::end();
         }
         if (self::$start_time == 0) {
             throw new Exception('use Pench::start() first!');
         }
         $result                 = [];
-        $result['time_elapsed'] = self::$end_time - self::$start_time . ' Sec';
+        $result['time_elapsed'] = self::calcuate_time_with_unit(self::$end_time - self::$start_time);
         $result['memory_usage'] = self::calcuate_memory_with_unit(self::$end_memory - self::$start_memory);
 
         if (self::$end_peak_memory > self::$start_peak_memory) {
@@ -62,13 +71,11 @@ class Pench
         return $result;
     }
 
-    public static function dump($label)
+    public static function dump($label = false)
     {
         if (empty(self::$stats)) {
-            self::stats();
+            $report = self::stats();
         }
-
-        $report = self::$stats;
         if ($label) {
             $l[$label] = $report;
         } else {
