@@ -11,6 +11,6 @@
     "require": {},
     "require-dev": {},
     "autoload": {
-        "files": ["pench.php"]
+        "files": ["src/pench.php"]
     }
 }
