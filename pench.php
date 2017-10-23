@@ -9,6 +9,8 @@ class Pench
     static $end_memory;
     static $end_peak_memory;
 
+    static $stats = [];
+
     public static function start()
     {
         self::$start_time = self::$start_memory = self::$end_time = self::$end_memory = 0;
@@ -24,8 +26,19 @@ class Pench
         self::$end_memory      = memory_get_usage(false);
         self::$end_peak_memory = memory_get_peak_usage(false);
 
-        self::$stats = self::stats();
-        return self::$stats;
+        return self::stats();
+    }
+
+    public static function calcuate_memory_with_unit($input)
+    {
+        if ($input < 1024) {
+            return ($input) . ' Byte';
+        } elseif ($input > 1024 and $input < 1048000) {
+            return ($input / 1024) . ' KB';
+        } else {
+            return ($input / 1024 / 1024) . ' MB';
+        }
+
     }
     public static function stats()
     {
@@ -36,16 +49,16 @@ class Pench
             throw new Exception('use Pench::start() first!');
         }
         $result                 = [];
-        $result['time_elapsed'] = self::$end_time - self::$start_time . ' S';
-        $result['memory_usage'] = ((self::$end_memory - self::$start_memory) / 1024 / 1024) . ' KB';
+        $result['time_elapsed'] = self::$end_time - self::$start_time . ' Sec';
+        $result['memory_usage'] = self::calcuate_memory_with_unit(self::$end_memory - self::$start_memory);
 
         if (self::$end_peak_memory > self::$start_peak_memory) {
             $result['peak_memory_usage'] = self::$end_peak_memory - self::$start_peak_memory;
         } else {
             $result['peak_memory_usage'] = self::$end_peak_memory;
         };
-        $result['peak_memory_usage'] = ($result['peak_memory_usage'] / 1024 / 1024) . ' KB';
-
+        $result['peak_memory_usage'] = self::calcuate_memory_with_unit($result['peak_memory_usage']);
+        self::$stats                 = $result;
         return $result;
     }
 
