@@ -1,8 +1,9 @@
 {
     "name": "hosseinmousavi/pench",
-    "description": "",
+    "version"     : "0.0.4",
+    "description": "Another PHP benchmark system",
     "license": "MIT",
-    "keywords": [""],
+    "keywords": ["php","benchmark"],
     "authors": [{
         "name": "Mir Hossein Mousavi",
         "email": "mhm007@gmail.com"
