@@ -9,7 +9,7 @@ class Pench
     static $end_memory;
     static $end_peak_memory;
 
-    static $stats = [];
+    static $report = [];
 
     public static function start()
     {
@@ -26,14 +26,18 @@ class Pench
         self::$end_memory      = memory_get_usage(false);
         self::$end_peak_memory = memory_get_peak_usage(false);
 
-        return self::stats();
+        return self::benchmark();
     }
 
-    public static function stats()
+    public static function benchmark()
     {
         if (self::$end_time == 0) {
-            self::end();
+            return self::end();
         }
+        if (!empty(self::$report)) {
+            return self::$report;
+        }
+
         if (self::$start_time == 0) {
             throw new Exception('use Pench::start() first!');
         }
@@ -47,15 +51,15 @@ class Pench
             $result['peak_memory_usage'] = self::$end_peak_memory;
         };
         $result['peak_memory_usage'] = self::calcuate_memory_with_unit($result['peak_memory_usage']);
-        self::$stats                 = $result;
+        self::$report                = $result;
         self::$end_time              = 0; //reset benchmark
-        return $result;
+        return self::$report;
     }
 
     public static function dump($label = false)
     {
-        if (empty(self::$stats)) {
-            $report = self::stats();
+        if (empty(self::$report)) {
+            $report = self::end();
         }
         if ($label) {
             $l[$label] = $report;
@@ -65,7 +69,7 @@ class Pench
         var_dump($l);
     }
 
-    public static function calcuate_memory_with_unit($input)
+    private static function calcuate_memory_with_unit($input)
     {
         if ($input < 1024) {
             return ($input) . ' B';
@@ -76,7 +80,7 @@ class Pench
         }
 
     }
-    public static function calcuate_time_with_unit($input)
+    private static function calcuate_time_with_unit($input)
     {
         if ($input < 300) {
             return $input . ' Sec';

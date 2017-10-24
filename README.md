@@ -39,12 +39,19 @@ array (size=1)
 Also you can use dump() to print the report and it's not necessary to call end() because dump itself will call it, it's possible to pass a label to dump() so it'll be clear which result belongs to what part of the program.
 ```php
 require 'pench.php';
+
 pench::start();
+
 $haystack = rang(1,1000000);
+
 array_walk($haystack,function($value){
+
   echo $value;
+
 });
+
 pench::dump('array_walk');
+
 ```
 will ouput
 ```php
@@ -58,14 +65,38 @@ array (size=1)
 For benchmarking multiple parts you should call pench::start() every time.
 ```php
 pench::start();
+
 foreach($haystack as $value) {
+
   echo $value;
+
 }
+
 $report['foreach']=pench::end();//or pench::dump('array_foreach') or pench::dump() to print report inline
+
 pench::start();
+
 array_walk($haystack,function($value){
+
   echo $value;
+
 });
 
 $report['array_walk']=pench::end();//or pench::dump('array_walk') to print report inline
+
+```
+use `benchmark()` to fetch last report
+```php
+pench::start();
+
+foreach($haystack as $value) {
+
+  echo $value;
+
+}
+
+pench::end();//or pench::dump('array_foreach') or pench::dump() to print report inline
+
+var_dump(pench::benchmark());
+
 ```
