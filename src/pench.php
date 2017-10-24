@@ -69,7 +69,7 @@ class Pench
     {
         if ($input < 1024) {
             return ($input) . ' B';
-        } elseif ($input > 1024 and $input < 1048000) {
+        } elseif ($input > 1024 and $input < 1048576) {
             return ($input / 1024) . ' KB';
         } else {
             return ($input / 1024 / 1024) . ' MB';
