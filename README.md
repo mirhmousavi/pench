@@ -1,9 +1,9 @@
 # pench
 ## Another PHP benchmark system
-**This library benchmark php applications and show time_elapsed,memory_usage and memory_peak_usage, but you should consider there is no way to get precise amount of memory consumed by the application because there is no way for php to report it, the memory_get_usage(false) just report the memory that is allocated not actually using by the application but it's near the real memory usage by the application.**
+**This library benchmark php applications and show time_elapsed,memory_usage and memory_peak_usage, but you should consider there is no way to get precise amount of memory consumed by the application because there is no way for php to report it, the memory_get_usage(false) just report the memory that is allocated not actually using by the application but it's near the real memory usage by the application.**<br>
 Install pench via composer
 ```
-composer require hosseinmousavi/pench
+composer require hosseinmousavi/pench:dev-master
 ```
 Then include composer autoload file
 ```php
@@ -65,5 +65,6 @@ pench::start();
 array_walk($haystack,function($value){
   echo $value;
 });
+
 $report['array_walk']=pench::end();//or pench::dump('array_walk') to print report inline
 ```
