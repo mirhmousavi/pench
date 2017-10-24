@@ -1,31 +1,32 @@
 # pench
 ## Another PHP benchmark system
-install pench via composer
+**This library benchmark php applications and show time_elapsed,memory_usage and memory_peak_usage, but you should consider there is no way to get precise amount of memory consumed by the application because there is no way for php to report it, the memory_get_usage(false) just report the memory that is allocated not actually using by the application but it's near the real memory usage by the application.**
+Install pench via composer
 ```
 composer require hosseinmousavi/pench
 ```
-then include composer autoload file
+Then include composer autoload file
 ```php
 require 'vendor/autoload.php';
 ```
-or just include it
+Or just include it
 ```
 require 'src/pench.php';
 ```
-pench API is damn simple, see example below:
+pench API is damn simple, see example below
 
 ```php
 require 'pench.php';
 $haystack = rang(1,1000000);
 
-Pench::start();
+pench::start();
 foreach($haystack as $value) {
   echo $value;
 }
-$report['foreach']=Pench::end();
+$report['foreach']=pench::end();
 var_dump($report);
 ```
-will output
+Will output
 ```php
 array (size=1)
   'foreach' => 
@@ -34,15 +35,15 @@ array (size=1)
       'memory_usage' => string '112 Byte' (length=8)
       'peak_memory_usage' => string '176 Byte' (length=8)
 ```   
-also you can use dump function to print the report and it's not necessary to call end() because dump itself will call it, it's possible to pass a label to dump() so it's obvious which result belong to what part of the program
+Also you can use dump() to print the report and it's not necessary to call end() because dump itself will call it, it's possible to pass a label to dump() so it'll be clear which result belongs to what part of the program.
 ```php
 require 'pench.php';
-Pench::start();
+pench::start();
 $haystack = rang(1,1000000);
 array_walk($haystack,function($value){
   echo $value;
 });
-Pench::dump('array_walk');
+pench::dump('array_walk');
 ```
 will ouput
 ```php
@@ -53,16 +54,16 @@ array (size=1)
       'memory_usage' => string '152 Byte' (length=8)
       'peak_memory_usage' => string '176 Byte' (length=8)
 ```
-for benchmarking multiple parts you should call Pench::start() every time
+For benchmarking multiple parts you should call pench::start() every time.
 ```php
-Pench::start();
+pench::start();
 foreach($haystack as $value) {
   echo $value;
 }
-$report['foreach']=Pench::end();
-Pench::start();
+$report['foreach']=pench::end();//or pench::dump('array_foreach') or pench::dump() to print report inline
+pench::start();
 array_walk($haystack,function($value){
   echo $value;
 });
-$report['array_walk']=Pench::end();//or Pench::dump('array_walk') to print report inline
+$report['array_walk']=pench::end();//or pench::dump('array_walk') to print report inline
 ```
